@@ -1,0 +1,28 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id      String @id @default(uuid())
+    groupId String? @map("group_id") 
+    name    String
+    email   String @unique
+    group   Group? @relation(fields: [groupId], references: [id])
+}
+
+model Group {
+    id     String      @id @default(uuid())
+    name   String
+    status GroupStatus @default(Empty)
+    users User[]
+}
+
+enum GroupStatus {
+    Empty
+    NotEmpty
+}
