@@ -8,8 +8,6 @@ const createUser = async (email: string, name: string, groupId: string): Promise
         throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
     }
 
-    console.log({ groupId });
-
     if (groupId && !(await getGroupById(groupId))) {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid groupId provided');
     }
